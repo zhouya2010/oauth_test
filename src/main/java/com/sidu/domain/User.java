@@ -1,7 +1,10 @@
 package com.sidu.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@Component
 public class User {
     private Integer id;
 

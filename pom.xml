@@ -18,6 +18,72 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.35</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <driver>${jdbc.driver}</driver>
+                    <url>${jdbc.url}</url>
+                    <username>${jdbc.user}</username>
+                    <password>${jdbc.pass}</password>
+                    <skip>${jdbc.execute.skip}</skip>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>init db</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${jdbc.url}</url>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>others/database/initial_db.ddl</srcFile>
+                                <srcFile>others/database/oauth.ddl</srcFile>
+                            </srcFiles>
+                            <onError>continue</onError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <skip>${test.skip}</skip>
+                    <forkMode>none</forkMode>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <systemProperties>
+                        <property>
+                            <name>jdbc.url</name>
+                            <value>${jdbc.url}</value>
+                        </property>
+                        <property>
+                            <name>jdbc.username</name>
+                            <value>${jdbc.user}</value>
+                        </property>
+                        <property>
+                            <name>jdbc.password</name>
+                            <value>${jdbc.pass}</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -36,6 +102,16 @@
         <fastjson-version>1.2.12</fastjson-version>
         <guava.version>17.0</guava.version>
         <dozer.version>5.5.1</dozer.version>
+
+        <!--jdbc execute sql config-->
+        <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+        <jdbc.url>jdbc:mysql://112.74.182.214:3306/oauth_db?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8</jdbc.url>
+        <jdbc.user>yanfa</jdbc.user>
+        <jdbc.pass>yanfa123</jdbc.pass>
+        <!--if do not use execute sql, change the value to true-->
+        <jdbc.execute.skip>false</jdbc.execute.skip>
+        <test.skip>false</test.skip>
+
     </properties>
 
     <dependencies>

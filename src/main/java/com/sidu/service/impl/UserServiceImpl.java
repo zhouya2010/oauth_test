@@ -1,14 +1,23 @@
 package com.sidu.service.impl;
 
+import com.sidu.dao.UserMapper;
+import com.sidu.domain.MyUserDetails;
 import com.sidu.domain.User;
 import com.sidu.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by dell on 2017/1/21.
  */
+@Service("userService")
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserMapper mapper;
+
     @Override
     public User loadCurrentUserJsonDto() {
         return null;
@@ -31,6 +40,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+        return new MyUserDetails(mapper.selectByUserName(s));
     }
 }

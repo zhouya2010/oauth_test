@@ -17,6 +17,13 @@
     id, guid, create_time, archived, email, password, phone, username, default_user, 
     last_login_time
   </sql>
+  
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from user_
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
