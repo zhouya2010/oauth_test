@@ -88,6 +88,10 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.0.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security.oauth:spring-security-oauth2:2.0.7.RELEASE" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.6" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-core:1.2.3" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-web:1.2.3" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-spring:1.2.3" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-ehcache:1.2.3" />
         </element>
       </element>
     </root>

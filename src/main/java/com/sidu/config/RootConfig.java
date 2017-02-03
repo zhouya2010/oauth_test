@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
         basePackageClasses = {SecurityConfiguration.class},
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)}
 )
+@ImportResource({"classpath:spring-shiro-web.xml"})
 public class RootConfig {
 
 }

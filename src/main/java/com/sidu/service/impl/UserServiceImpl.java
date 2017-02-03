@@ -14,7 +14,7 @@ import java.util.Set;
  * <p>Date: 14-1-28
  * <p>Version: 1.0
  */
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
