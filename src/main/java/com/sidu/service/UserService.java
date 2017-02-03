@@ -1,18 +1,64 @@
 package com.sidu.service;
 
+
 import com.sidu.domain.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.Set;
 
 /**
- * @author Shengzhao Li
+ * <p>User: Zhang Kaitao
+ * <p>Date: 14-1-28
+ * <p>Version: 1.0
  */
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
-    User loadCurrentUserJsonDto();
+    /**
+     * 创建用户
+     * @param user
+     */
+    public User createUser(User user);
 
-    User loadUserOverviewDto(User overviewDto);
+    /**
+     * 修改密码
+     * @param userId
+     * @param newPassword
+     */
+    public void changePassword(Long userId, String newPassword);
 
-    boolean isExistedUsername(String username);
+    /**
+     * 添加用户-角色关系
+     * @param userId
+     * @param roleIds
+     */
+    public void correlationRoles(Long userId, Long... roleIds);
 
-    String saveUser(User formDto);
+
+    /**
+     * 移除用户-角色关系
+     * @param userId
+     * @param roleIds
+     */
+    public void uncorrelationRoles(Long userId, Long... roleIds);
+
+    /**
+     * 根据用户名查找用户
+     * @param username
+     * @return
+     */
+    public User findByUsername(String username);
+
+    /**
+     * 根据用户名查找其角色
+     * @param username
+     * @return
+     */
+    public Set<String> findRoles(String username);
+
+    /**
+     * 根据用户名查找其权限
+     * @param username
+     * @return
+     */
+    public Set<String> findPermissions(String username);
+
 }

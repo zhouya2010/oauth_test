@@ -1,85 +1,34 @@
 package com.sidu.domain;
 
-import org.springframework.stereotype.Component;
+import java.io.Serializable;
 
-import java.util.Date;
-
-@Component
-public class User {
-    private Integer id;
-
-    private String guid;
-
-    private Date createTime;
-
-    private Boolean archived;
-
-    private String email;
-
-    private String password;
-
-    private String phone;
-
+/**
+ * <p>User: Zhang Kaitao
+ * <p>Date: 14-1-28
+ * <p>Version: 1.0
+ */
+public class User implements Serializable {
+    private Long id;
     private String username;
+    private String password;
+    private String salt;
 
-    private Boolean defaultUser;
+    private Boolean locked = Boolean.FALSE;
 
-    private Date lastLoginTime;
+    public User() {
+    }
 
-    public Integer getId() {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getGuid() {
-        return guid;
-    }
-
-    public void setGuid(String guid) {
-        this.guid = guid == null ? null : guid.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getArchived() {
-        return archived;
-    }
-
-    public void setArchived(Boolean archived) {
-        this.archived = archived;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getUsername() {
@@ -87,22 +36,62 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
     }
 
-    public Boolean getDefaultUser() {
-        return defaultUser;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDefaultUser(Boolean defaultUser) {
-        this.defaultUser = defaultUser;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Date getLastLoginTime() {
-        return lastLoginTime;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getCredentialsSalt() {
+        return username + salt;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", locked=" + locked +
+                '}';
     }
 }

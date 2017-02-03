@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @Configuration
 @Import(DataSourceConfig.class)
-@ImportResource({"classpath:security.xml"})
 @ComponentScan(
         basePackages = {"com.sidu.dao", "com.sidu.domain", "com.sidu.service"},
         basePackageClasses = {SecurityConfiguration.class},
