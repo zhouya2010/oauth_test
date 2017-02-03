@@ -18,7 +18,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     //spring 相关配置
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{RootConfig.class, WebSecurityConfigurer.class,OAuth2ServerConfig.class};
+        return new Class<?>[]{RootConfig.class};
     }
 
     //MVC 相关配置
@@ -49,7 +49,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
-        DelegatingFilterProxy securityFilter = new DelegatingFilterProxy("springSecurityFilterChain");
-        return new Filter[] {characterEncodingFilter,securityFilter};
+//        DelegatingFilterProxy securityFilter = new DelegatingFilterProxy("springSecurityFilterChain");
+        return new Filter[] {characterEncodingFilter};
     }
 }
