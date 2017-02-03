@@ -35,8 +35,13 @@ public class CustomJdbcClientDetailsService extends JdbcClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
-        System.out.println("loadClientByClientId");
-        return super.loadClientByClientId(clientId);
+        System.out.println("loadClientByClientId ==> " + clientId);
+
+        ClientDetails details  = super.loadClientByClientId(clientId);
+        for(String type : details.getAuthorizedGrantTypes()){
+            System.out.println(type);
+        }
+        return details;
     }
 
 

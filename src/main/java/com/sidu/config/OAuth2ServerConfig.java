@@ -1,8 +1,12 @@
 package com.sidu.config;
 
+import com.sidu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -14,6 +18,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -29,13 +35,15 @@ public class OAuth2ServerConfig {
     //  unity-resource
     @Configuration
     @EnableResourceServer
+    @Order(6)
     protected static class UnityResourceServerConfiguration extends ResourceServerConfigurerAdapter {
         @Autowired
         private AccessDecisionManager oauth2AccessDecisionManager;
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
-            resources.resourceId(UNITY_RESOURCE_ID).stateless(false);
+            System.out.println("ResourceServerSecurityConfigurer");
+            resources.resourceId(MOBILE_RESOURCE_ID).stateless(false);
         }
 
         @Override
@@ -71,6 +79,12 @@ public class OAuth2ServerConfig {
         @Autowired
         private AuthorizationCodeServices authorizationCodeServices;
 
+        @Autowired
+        private AuthenticationManager authenticationManager;
+
+        @Autowired
+        private UserService userService;
+
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients.withClientDetails(clientDetailsService);
@@ -94,9 +108,12 @@ public class OAuth2ServerConfig {
 
             System.out.println("AuthorizationServerEndpointsConfigurer");
 
-            endpoints.tokenStore(tokenStore)
+            endpoints
+                    .userDetailsService(userService)
+                    .tokenStore(tokenStore)
                     .userApprovalHandler(userApprovalHandler)
-                    .authorizationCodeServices(authorizationCodeServices);
+                    .authorizationCodeServices(authorizationCodeServices)
+                    .authenticationManager(authenticationManager);
         }
 
         @Override
@@ -105,6 +122,14 @@ public class OAuth2ServerConfig {
 //                    .authenticationEntryPoint(oAuth2AuthenticationEntryPoint)
 //                    .allowFormAuthenticationForClients();
             security.realm("spring-oauth-server_realm");
+        }
+
+        @Bean
+        public ApprovalStore approvalStore() throws Exception {
+            System.out.println("TokenApprovalStore");
+            TokenApprovalStore store = new TokenApprovalStore();
+            store.setTokenStore(tokenStore);
+            return store;
         }
     }
 }

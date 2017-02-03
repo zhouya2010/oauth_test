@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.access.vote.RoleVoter;
@@ -43,6 +44,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @Import(DataSourceConfig.class)
+@Order(2)
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -50,6 +52,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("AuthenticationManagerBuilder Configure");
         auth.userDetailsService(userService)
                 .passwordEncoder(new Md5PasswordEncoder());
 
