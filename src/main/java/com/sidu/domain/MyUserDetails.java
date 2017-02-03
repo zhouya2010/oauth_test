@@ -26,9 +26,15 @@ public class MyUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "USER"));
-        grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "USER"));
-        System.out.println("SimpleGrantedAuthority ===>" + grantedAuthorities.get(1).getAuthority());
+        grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "MOBILE"));
+        grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "UNITY"));
+
+//        final List<Privilege> privileges = user.privileges();
+//        for (Privilege privilege : privileges) {
+//            this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + privilege.name()));
+//        }
+
+        System.out.println("SimpleGrantedAuthority ===>" + grantedAuthorities.get(0).getAuthority());
         return grantedAuthorities;
     }
 

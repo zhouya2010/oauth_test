@@ -2,10 +2,7 @@ package com.sidu.config;
 
 
 import com.sun.org.apache.xerces.internal.parsers.SecurityConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -13,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @Configuration
 @Import(DataSourceConfig.class)
+@ImportResource({"classpath:security.xml"})
 @ComponentScan(
         basePackages = {"com.sidu.dao", "com.sidu.domain", "com.sidu.service"},
         basePackageClasses = {SecurityConfiguration.class},
