@@ -1,5 +1,7 @@
 package com.sidu.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * <p>Date: 14-1-28
  * <p>Version: 1.0
  */
+@Component
 public class User implements Serializable {
     private Long id;
     private String username;

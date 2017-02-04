@@ -107,9 +107,9 @@
 
         <!--jdbc execute sql config-->
         <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-        <jdbc.url>jdbc:mysql://112.74.182.214:3306/oauth_db?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8</jdbc.url>
-        <jdbc.user>yanfa</jdbc.user>
-        <jdbc.pass>yanfa123</jdbc.pass>
+        <jdbc.url>jdbc:mysql://localhost:3306/shiro_db?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8</jdbc.url>
+        <jdbc.user>root</jdbc.user>
+        <jdbc.pass>123456</jdbc.pass>
         <!--if do not use execute sql, change the value to true-->
         <jdbc.execute.skip>false</jdbc.execute.skip>
         <test.skip>false</test.skip>

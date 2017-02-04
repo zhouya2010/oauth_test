@@ -1,9 +1,15 @@
 package com.sidu.controller;
 
+import com.sidu.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +18,11 @@ import javax.servlet.http.HttpServletRequest;
  * Created by dell on 2017/1/21.
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping
 public class UserController {
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping("hello")
     public String test(){
@@ -22,18 +31,20 @@ public class UserController {
 
 
     @RequestMapping(value = "/login"    )
-    public String showLoginForm(HttpServletRequest req, Model model) {
-        String exceptionClassName = (String)req.getAttribute("shiroLoginFailure");
-        String error = null;
-        if(UnknownAccountException.class.getName().equals(exceptionClassName)) {
-            error = "用户名/密码错误";
-        } else if(IncorrectCredentialsException.class.getName().equals(exceptionClassName)) {
-            error = "用户名/密码错误";
-        } else if(exceptionClassName != null) {
-            error = "其他错误：" + exceptionClassName;
-        }
-        model.addAttribute("error", error);
-        return "login";
+    public String showLoginForm(@RequestParam("username") String username, @RequestParam("password") String password) {
+
+        userService.findByUsername(username);
+        return "error";
+
+//        Subject subject = SecurityUtils.getSubject() ;
+//        UsernamePasswordToken token = new UsernamePasswordToken(username,password) ;
+//        try {
+//            subject.login(token);
+//            return "admin" ;
+//        }catch (Exception e){
+//            //这里将异常打印关闭是因为如果登录失败的话会自动抛异常
+//            return "error" ;
+//        }
     }
 
 }
